@@ -248,5 +248,55 @@ def delete_sports(sports_id):
     flash('Sports Details Removed Successfully')
     return redirect(url_for('Index', table_id='sports'))
 
+#################### TEACHER_SPORTS ####################
+ 
+@app.route('/teacher_sports', methods=['POST'])
+def teacher_sports():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+
+        teacher_id = request.form['teacher_id']
+        sports_id = request.form['sports_id']
+
+        cur.execute(f"INSERT INTO teacher_sports (teacher_id, sports_id) VALUES {(teacher_id, sports_id)}")
+        conn.commit()
+        flash('Teacher Sports Added successfully')
+        return redirect(url_for('Index', table_id="teacher_sports"))
+
+@app.route('/edit/teacher_sports/<teacher_id>', methods = ['POST', 'GET'])
+def edit_teacher_sports(teacher_id):
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(f'SELECT * FROM teacher_sports WHERE teacher_id = {teacher_id}')
+    data = cur.fetchall()
+    cur.close()
+    print(data[0])
+    return render_template('teacher_sports/edit.html', teacher_sports = data[0])
+
+@app.route('/update/teacher_sports/<teacher_id>', methods=['POST'])
+def update_teacher_sports(teacher_id):
+    if request.method == 'POST':
+
+        teacher_id = request.form['teacher_id']
+        sports_id = request.form['sports_id']
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("""
+            UPDATE teacher_sports
+            SET sports_id = %s
+            WHERE teacher_id = %s
+        """, (sports_id, teacher_id))
+        flash('Teacher Sports Details Updated Successfully')
+        conn.commit()
+        return redirect(url_for('Index', table_id="teacher_sports"))
+
+@app.route('/delete/teacher_sports/<teacher_id>', methods = ['POST','GET'])
+def delete_teacher_sports(teacher_id):
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+   
+    cur.execute('DELETE FROM teacher_sports WHERE teacher_id = {0}'.format(teacher_id))
+    conn.commit()
+    flash('Techer Sports Details Removed Successfully')
+    return redirect(url_for('Index', table_id="teacher_sports"))
+
 if __name__ == "__main__":
     app.run(debug=True)
