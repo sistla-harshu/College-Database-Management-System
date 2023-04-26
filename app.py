@@ -18,7 +18,7 @@ def Index():
     s = "SELECT * FROM student"
     cur.execute(s) # Execute the SQL
     list_users = cur.fetchall()
-    return render_template('index.html', list_users = list_users)
+    return render_template('student/index.html', list_users = list_users)
  
 @app.route('/student', methods=['POST'])
 def student():
@@ -37,16 +37,16 @@ def student():
         flash('Student Added successfully')
         return redirect(url_for('Index'))
  
-@app.route('/edit/<student_id>', methods = ['POST', 'GET'])
-def get_employee(student_id):
+@app.route('/edit/student/<student_id>', methods = ['POST', 'GET'])
+def edit_student(student_id):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute(f'SELECT * FROM student WHERE student_id = {student_id}')
     data = cur.fetchall()
     cur.close()
     print(data[0])
-    return render_template('edit.html', student = data[0])
+    return render_template('student/edit.html', student = data[0])
  
-@app.route('/update/<student_id>', methods=['POST'])
+@app.route('/update/student/<student_id>', methods=['POST'])
 def update_student(student_id):
     if request.method == 'POST':
         student_id = request.form['student_id']
@@ -69,7 +69,7 @@ def update_student(student_id):
         conn.commit()
         return redirect(url_for('Index'))
  
-@app.route('/delete/<student_id>', methods = ['POST','GET'])
+@app.route('/delete/student/<student_id>', methods = ['POST','GET'])
 def delete_student(student_id):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
    

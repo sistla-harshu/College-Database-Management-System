@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "student/layout.html" %}
 {% block body %}
   <div class="row">
     <div class="col-md-4 offset-md-4">
       <div class="card card-body">
-        <form action="/update/{{student.student_id}}" method="POST">
+        <form action="/update/student/{{student.student_id}}" method="POST">
           <div class="form-group">
             <input type="number" class="form-control" name="student_id" value="{{student.student_id}}">
           </div>

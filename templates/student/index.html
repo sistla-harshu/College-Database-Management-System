@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "student/layout.html" %}
 {% block body %}
  <div class="row"><h3>Students</h3></div>
   <div class="row">
@@ -64,8 +64,8 @@
             <td>{{row[4]}}</td>
             <td>{{row[5]}}</td>
             <td width="130">
-              <a href="/edit/{{row[0]}}" class="btn btn-secondary btn-sm">edit</a>
-              <a href="/delete/{{row[0]}}" class="btn btn-danger btn-delete btn-sm">delete</a>
+              <a href="/edit/student/{{row[0]}}" class="btn btn-secondary btn-sm">edit</a>
+              <a href="/delete/student/{{row[0]}}" class="btn btn-danger btn-delete btn-sm">delete</a>
             </td>
           </tr>
           {% endfor %}

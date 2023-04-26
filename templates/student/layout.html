@@ -21,7 +21,7 @@
     </div>
    
 <script>
-const btnDelete= document.querySelectorAll('.btn-delete');
+const btnDelete = document.querySelectorAll('.btn-delete');
 if(btnDelete) {
   const btnArray = Array.from(btnDelete);
   btnArray.forEach((btn) => {
@@ -36,7 +36,7 @@ if(btnDelete) {
 $(document).ready(function() {
     $('#example').DataTable({     
       "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]],
-        "iDisplayLength": 3
+        "iDisplayLength": -1
        } 
     );
 } );
