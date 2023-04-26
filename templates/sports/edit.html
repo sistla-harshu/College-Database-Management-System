@@ -1,0 +1,24 @@
+{% extends "sports/layout.html" %}
+{% block body %}
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card card-body">
+        <form action="/update/sports/{{sports.sports_id}}" method="POST">
+          <div class="form-group">
+            <input type="number" class="form-control" name="sports_id" value="{{sports.sports_id}}">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="sports_name" value="{{sports.sports_name}}">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name="ground_id" value="{{sports.ground_id}}">
+          </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
