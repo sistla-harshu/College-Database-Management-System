@@ -298,5 +298,54 @@ def delete_teacher_sports(teacher_id):
     flash('Techer Sports Details Removed Successfully')
     return redirect(url_for('Index', table_id="teacher_sports"))
 
+#################### STUDENT TEACHER ####################
+ 
+@app.route('/student_teacher', methods=['POST'])
+def student_teacher():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+
+        student_id = request.form['student_id']
+        teacher_id = request.form['teacher_id']
+
+        cur.execute(f"INSERT INTO student_teacher (student_id, teacher_id) VALUES {(student_id, teacher_id)}")
+        conn.commit()
+        flash('Student Teacher Added successfully')
+        return redirect(url_for('Index', table_id="student_teacher"))
+ 
+@app.route('/edit/student_teacher/<student_id>', methods = ['POST', 'GET'])
+def edit_student_teacher(student_id):
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute(f'SELECT * FROM student_teacher WHERE student_id = {student_id}')
+    data = cur.fetchall()
+    cur.close()
+    print(data[0])
+    return render_template('student_teacher/edit.html', student_teacher = data[0])
+ 
+@app.route('/update/student_teacher/<student_id>', methods=['POST'])
+def update_student_teacher(student_id):
+    if request.method == 'POST':
+        student_id = request.form['student_id']
+        techer_id = request.form['teacher_id']
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("""
+            UPDATE student_teacher
+            SET teacher_id = %s
+            WHERE student_id = %s
+        """, (techer_id, student_id))
+        flash('Student Teacher Details Updated Successfully')
+        conn.commit()
+        return redirect(url_for('Index', table_id="student_teacher"))
+ 
+@app.route('/delete/student_teacher/<student_id>', methods = ['POST','GET'])
+def delete_student_teacher(student_id):
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+   
+    cur.execute('DELETE FROM student_teacher WHERE student_id = {0}'.format(student_id))
+    conn.commit()
+    flash('Student Teacher Details Removed Successfully')
+    return redirect(url_for('Index', table_id="student_teacher"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
