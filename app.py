@@ -14,6 +14,7 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 
 
 @app.route('/')
+@app.route('/favicon.ico') # ignore
 @app.route('/<table_id>')
 def Index(table_id="student"):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
